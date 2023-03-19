@@ -9,12 +9,4 @@
     font-family: "Open Sans", sans-serif;
     font-size: 13px !important;
   }
-
-  button {
-    @apply px-4 py-2 rounded-lg bg-sky-400 hover:bg-sky-300 transition cursor-pointer font-semibold text-white;
-  }
-
-  .container {
-    max-width: 1200px !important;
-  }
 }
