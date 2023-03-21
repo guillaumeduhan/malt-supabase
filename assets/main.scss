@@ -9,4 +9,9 @@
     font-family: "Open Sans", sans-serif;
     font-size: 13px !important;
   }
+
+  .container {
+    @apply mx-auto;
+    max-width: 1000px;
+  }
 }
