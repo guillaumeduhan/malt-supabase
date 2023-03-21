@@ -1,4 +1,5 @@
 <script setup>
+const client = useSupabaseClient()
 
 const state = reactive({
   loading: false,
@@ -18,10 +19,15 @@ const sendMessage = async () => {
   }
   try {
     state.loading = true
-    messages.value.push(newMessage.value);
-    newMessage.value = {
-      name: undefined,
-      description: undefined
+    const { data, error } = await client
+      .from('posts')
+      .insert(newMessage.value)
+    if (data) {
+      messages.value.push(newMessage.value);
+      newMessage.value = {
+        name: undefined,
+        description: undefined
+      }
     }
   } catch (e) {
     console.log(e)
@@ -29,6 +35,24 @@ const sendMessage = async () => {
     state.loading = false
   }
 }
+
+const fetchMessages = async () => {
+  try {
+    state.loading = true
+    const { data, error } = await client
+      .from('posts')
+      .select('*')
+    if (data) {
+      messages.value.push(newMessage.value);
+    }
+  } catch (e) {
+    console.log(e)
+  } finally {
+    state.loading = false
+  }
+}
+
+fetchMessages()
 </script>
 
 <template>
