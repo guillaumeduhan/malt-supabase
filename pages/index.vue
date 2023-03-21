@@ -9,8 +9,8 @@ const state = reactive({
 
 const messages = ref([])
 const newMessage = ref({
-  name: "Freddy Malter",
-  description: "Hello Guillaume !"
+  name: undefined,
+  description: undefined
 })
 
 const sendMessage = async () => {
@@ -43,7 +43,7 @@ const fetchMessages = async () => {
       .from('posts')
       .select('*')
     if (data) {
-      messages.value.push(newMessage.value);
+      messages.value = data;
     }
   } catch (e) {
     console.log(e)
