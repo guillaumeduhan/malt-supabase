@@ -52,6 +52,16 @@ const fetchMessages = async () => {
   }
 }
 
+const posts = client.channel('custom-all-channel')
+  .on(
+    'postgres_changes',
+    { event: '*', schema: 'public', table: 'posts' },
+    (payload) => {
+      messages.value.push(payload.new)
+    }
+  )
+  .subscribe()
+
 fetchMessages()
 </script>
 
