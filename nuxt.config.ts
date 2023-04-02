@@ -11,4 +11,7 @@ export default defineNuxtConfig({
     },
   },
   modules: ["@nuxtjs/supabase"],
+  supabase: {
+    url: "https://xjmebgwkorhzgatbobwe.supabase.co",
+  },
 });

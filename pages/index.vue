@@ -22,6 +22,7 @@ const sendMessage = async () => {
     const { data, error } = await client
       .from('posts')
       .insert(newMessage.value)
+
     if (data) {
       messages.value.push(newMessage.value);
       newMessage.value = {
@@ -52,7 +53,8 @@ const fetchMessages = async () => {
   }
 }
 
-const posts = client.channel('custom-all-channel')
+const posts = client
+  .channel('custom-all-channel')
   .on(
     'postgres_changes',
     { event: '*', schema: 'public', table: 'posts' },
@@ -68,18 +70,15 @@ fetchMessages()
 <template>
   <div class="container" style="max-width: 500px;">
     <header class="my-8 text-center">
-      <h1 class="mb-2 text-2xl font-bold">Malt Académy sur Supabase</h1>
-      <p class="mb-2 text-base text-slate-500">Par Guillaume Duhan & Ariane Schneider</p>
-      <p class="text-sm text-slate-500">Mardi 21 Mars 2023</p>
+      <h1 class="mb-2 text-2xl font-bold">Supabase Realtime test</h1>
+      <p class="mb-2 text-base text-slate-500">By Codewithguillaume</p>
     </header>
     <div class="mx-auto">
-      <h2 class="mb-2 font-medium">Laisser un nouveau message (gentil):</h2>
-      <input v-model="newMessage.name" placeholder="Votre nom: Freddy Malter..."
-        class="w-full px-2 py-2 mb-1 border rounded-lg">
-      <input v-model="newMessage.description" placeholder="Mon message: Merci Guillaume et Ariane..."
-        class="w-full px-2 py-2 border rounded-lg">
+      <h2 class="mb-2 font-medium">Post a kind & new message:</h2>
+      <input v-model="newMessage.name" placeholder="Freddy Mercury" class="w-full px-2 py-2 mb-1 border rounded-lg">
+      <input v-model="newMessage.description" placeholder="Hello there !" class="w-full px-2 py-2 border rounded-lg">
       <button :disabled="state.loading" @click="sendMessage"
-        class="px-2 py-2 my-2 border rounded-lg disabled:opacity-25">Envoyer</button>
+        class="px-2 py-2 my-2 border rounded-lg disabled:opacity-25">Send</button>
     </div>
     <main class="my-12">
       <div class="px-4 py-3 mb-3 border rounded-lg" v-for="item, index in messages" :key="index">
